@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-//using WebApplication1.Data;
+using WebApplication1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<TeamsContext>(options =>
-//    options.UseSqlite(builder.Configuration["ConnectionStrings:TeamsConnection"])
-//);
+builder.Services.AddCors();
+
+builder.Services.AddDbContext<BowlingLeagueContext>(options =>
+    options.UseSqlite(builder.Configuration["ConnectionStrings:TeamsConnection"])
+);
+
+builder.Services.AddScoped<IBowlingRepository, EFBowlingRepository>();
 
 var app = builder.Build();
 
@@ -22,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(p => p.WithOrigins("http://localhost:3000"));
 
 app.UseHttpsRedirection();
 
