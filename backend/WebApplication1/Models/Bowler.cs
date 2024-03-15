@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models;
 
@@ -23,9 +24,13 @@ public partial class Bowler
 
     public string? BowlerPhoneNumber { get; set; }
 
+    [ForeignKey("TeamId")]
     public int? TeamId { get; set; }
+    public string TeamName { get; set; }
 
     public virtual ICollection<BowlerScore> BowlerScores { get; set; } = new List<BowlerScore>();
 
     public virtual Team? Team { get; set; }
+    
+    //public string TeamName { get; internal set; }
 }

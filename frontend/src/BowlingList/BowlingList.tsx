@@ -1,15 +1,17 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Bowling } from '../types/Bowling';
+import { Team } from '../types/Teams';
 
 function BowlingList() {
   const [bowlingData, setBowlingData] = useState<Bowling[]>([]);
-  const fetchBowlingData = async () => {
-    const rsp = await fetch('http://localhost:5023/api/Bowling');
-    const b = await rsp.json();
-    setBowlingData(b);
-  };
-
-  fetchBowlingData();
+  useEffect(() => {
+    const fetchBowlingData = async () => {
+      const rsp = await fetch('http://localhost:5023/api/Bowling');
+      const b = await rsp.json();
+      setBowlingData(b);
+    };
+    fetchBowlingData();
+  }, []);
 
   return (
     <>
@@ -29,9 +31,10 @@ function BowlingList() {
         <tbody>
           {bowlingData.map((b) => (
             <tr key={b.bowlerId}>
-              <td>{b.bowlerLastName}</td>
-              <td>{b.bowlerFirstName}</td>
-              <td>{b.bowlerMiddleInit}</td>
+              <td>
+                {b.bowlerLastName}, {b.bowlerFirstName} {b.bowlerMiddleInit}
+              </td>
+              <td>{b.teamName}</td>
               <td>{b.bowlerAddress}</td>
               <td>{b.bowlerCity}</td>
               <td>{b.bowlerState}</td>
