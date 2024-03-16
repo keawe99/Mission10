@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bowling } from '../types/Bowling';
-import { Team } from '../types/Teams';
+//import { Team } from '../types/Teams';
 
 function BowlingList() {
   const [bowlingData, setBowlingData] = useState<Bowling[]>([]);
@@ -18,32 +18,34 @@ function BowlingList() {
       <div className="row">
         <h4 className="text-center">Best Bowlers in Coney Island</h4>
       </div>
-      <table className="table table-bordered">
-        <thead>
-          <th>Bowler Name</th>
-          <th>Team Name</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Zip Code</th>
-          <th>Phone Number</th>
-        </thead>
-        <tbody>
-          {bowlingData.map((b) => (
-            <tr key={b.bowlerId}>
-              <td>
-                {b.bowlerLastName}, {b.bowlerFirstName} {b.bowlerMiddleInit}
-              </td>
-              <td>{b.teamName}</td>
-              <td>{b.bowlerAddress}</td>
-              <td>{b.bowlerCity}</td>
-              <td>{b.bowlerState}</td>
-              <td>{b.bowlerZip}</td>
-              <td>{b.bowlerPhoneNumber}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="container">
+        <table className="table table-bordered">
+          <thead>
+            <th>Bowler Name</th>
+            <th>Team Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Phone Number</th>
+          </thead>
+          <tbody>
+            {bowlingData.map((b) => (
+              <tr key={b.bowlerId}>
+                <td>
+                  {b.bowlerLastName}, {b.bowlerFirstName} {b.bowlerMiddleInit}
+                </td>
+                <td>{b.team.teamName}</td>
+                <td>{b.bowlerAddress}</td>
+                <td>{b.bowlerCity}</td>
+                <td>{b.bowlerState}</td>
+                <td>{b.bowlerZip}</td>
+                <td>{b.bowlerPhoneNumber}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

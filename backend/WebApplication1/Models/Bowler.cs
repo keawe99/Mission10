@@ -26,7 +26,7 @@ public partial class Bowler
 
     [ForeignKey("TeamId")]
     public int? TeamId { get; set; }
-    public string TeamName { get; set; }
+    //public string TeamName { get; set; }
 
     public virtual ICollection<BowlerScore> BowlerScores { get; set; } = new List<BowlerScore>();
 

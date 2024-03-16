@@ -14,10 +14,5 @@
         // Lambda expression to access the Teams table
         public IEnumerable<Team> Teams => _bowlerContext.Teams;
 
-        public Team GetTeamById(int? teamID)
-        {
-            return _bowlerContext.Teams.Find(teamID);
-
-        }
     }
 }

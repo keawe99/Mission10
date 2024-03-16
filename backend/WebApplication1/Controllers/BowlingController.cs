@@ -16,32 +16,33 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable <Bowler> Get()
+        public IEnumerable<Bowler> Get() //should pass in the team name to be returned in the api, need to figure out why dotnet won't run the api
         {
-            var bowlers = _bowlingRepository.Bowlers;
-            foreach(var bowler in bowlers)
-            {
-                bowler.Team = _bowlingRepository.GetTeamById(bowler.TeamId);
-            }
-            //var joinedData = from bowler in _bowlingRepository.Bowlers
-            //                 join team in _bowlingRepository.Teams
-            //                 on bowler.TeamId equals team.TeamId
-            //                 where team.TeamName == "Marlins" || team.TeamName == "Sharks"
-            //                 select new Bowler
-            //                 {
-            //                     BowlerId = bowler.BowlerId,
-            //                     BowlerLastName = bowler.BowlerLastName,
-            //                     BowlerFirstName = bowler.BowlerFirstName,
-            //                     BowlerMiddleInit = bowler.BowlerMiddleInit,
-            //                     BowlerAddress = bowler.BowlerAddress,
-            //                     BowlerCity = bowler.BowlerCity,
-            //                     BowlerState = bowler.BowlerState,
-            //                     BowlerZip = bowler.BowlerZip,
-            //                     BowlerPhoneNumber = bowler.BowlerPhoneNumber,
-            //                     TeamName = team.TeamName
-            //                 };
+            //var bowlerData = _bowlingRepository.Bowlers.ToArray();
+            var bowlerData = from bowler in _bowlingRepository.Bowlers
+                             join team in _bowlingRepository.Teams
+                             on bowler.TeamId equals team.TeamId
+                             where team.TeamName == "Marlins" || team.TeamName == "Sharks"
+                             select new Bowler
+                             {
+                                 BowlerId = bowler.BowlerId,
+                                 BowlerLastName = bowler.BowlerLastName,
+                                 BowlerFirstName = bowler.BowlerFirstName,
+                                 BowlerMiddleInit = bowler.BowlerMiddleInit,
+                                 BowlerAddress = bowler.BowlerAddress,
+                                 BowlerCity = bowler.BowlerCity,
+                                 BowlerState = bowler.BowlerState,
+                                 BowlerZip = bowler.BowlerZip,
+                                 BowlerPhoneNumber = bowler.BowlerPhoneNumber,
+                                 Team = new Team
+                                 {
+                                     TeamId = team.TeamId,
+                                     TeamName = team.TeamName,
+                                     CaptainId = team.CaptainId
+                                 }
+                             };
 
-            return bowlers;
+            return bowlerData.ToList();
         }
 
     }
